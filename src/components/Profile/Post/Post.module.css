@@ -1,0 +1,10 @@
+.content {
+    grid-area: c;
+    background-color: #c47bff;
+}
+
+.avapost img {
+    height: 50px;
+    width: 50px;
+    border-radius: 15px;
+}
