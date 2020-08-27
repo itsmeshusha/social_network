@@ -6,8 +6,22 @@ type MessagePropsType = {
 }
 
 const Message: React.FC<MessagePropsType> = (props: MessagePropsType) => {
+    let newMessage= React.createRef<HTMLTextAreaElement>();
+    
+    let addMessage =() => {
+        let text=newMessage.current ? newMessage.current.value : "----"
+        alert(text);
+        }; 
     return (
-        <div className={s.message}>{props.message}</div>
+        <div className={s.message}>{props.message}
+        <div>
+    <textarea ref={newMessage} />
+  
+  <button onClick={addMessage}>Add Message</button>
+
+  <button>Cancel</button>
+  </div>  
+  </div>
     )
 }
 

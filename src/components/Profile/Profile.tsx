@@ -3,13 +3,25 @@ import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
+import {PostDataType} from "../../redux/state";
 
 
-const Profile = () => {
+
+type PropsType ={
+    postData: Array<PostDataType>
+    newPostText: string
+    addPost: ( ) => void
+    updateNewPostText: (newText: string) => void
+}
+
+const Profile = (props: PropsType) => {
     return (
         <div>
             <ProfileInfo />
-            <MyPosts/>
+            <MyPosts postData={props.postData} 
+            newPostText={props.newPostText} 
+            addPost={props.addPost} 
+            updateNewPostText={props.updateNewPostText} />
 
         </div>
     );
