@@ -3,15 +3,14 @@ import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-import {PostDataType} from "../../redux/state";
+import {PostDataType, ActionType} from "../../redux/state";
 
 
 
 type PropsType ={
     postData: Array<PostDataType>
     newPostText: string
-    addPost: ( ) => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionType) => void
 }
 
 const Profile = (props: PropsType) => {
@@ -19,9 +18,9 @@ const Profile = (props: PropsType) => {
         <div>
             <ProfileInfo />
             <MyPosts postData={props.postData} 
-            newPostText={props.newPostText} 
-            addPost={props.addPost} 
-            updateNewPostText={props.updateNewPostText} />
+            newPostText={props.newPostText}
+            dispatch={props.dispatch} 
+             />
 
         </div>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
-
-
+import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator} from './profileReducer';
+import dialogsReducer, {updateNewMessageBodyActionCreator, sendMessageActionCreator} from './dialogsReducer';
 
 export type PostDataType = {
     message: string
@@ -24,6 +24,7 @@ export type ProfilePageType = {
 export type DialogsPageType ={
     messages: Array<MessageType>
     dialogs: Array<DialogType>
+    newMessageBody: string
 }
 
 export type SidebarType = {
@@ -36,50 +37,55 @@ export type RootStateType = {
     sidebar: SidebarType
 }
 
-let state: RootStateType = {
-    profilePage: {
-        posts: [
-            {message: 'Hi! How are you?', likesCount: '3 '},
-            {message: "It's my first post.", likesCount: '0 '}],
-        newPostText: "Hey Hey Hey!"    
-    },
-    dialogsPage: {
-        messages: [
-            {message: "What are you doing now? I have good news!"},
-            {message: "How are you?"},
-            {message: "Hi!"}],
-        dialogs: [
-            {name: "Igor", id: "1"},
-            {name: "Ann", id: "2"},
-            {name: "Grigory", id: "3"}]
-    },
-    sidebar: {}
+export type StoreType = {
+    _state: RootStateType
+    getState: () => RootStateType
+    _callSubscriber: () => void
+    subscribe: (observer: () => void) => void
+    dispatch: (action: ActionType) => void
 }
 
-let rerenderEntireTree =() => {
-    console.log("State changed");
-}
+export type ActionType = ReturnType<typeof addPostActionCreator>  | 
+                        ReturnType<typeof updateNewPostTextActionCreator> |
+                        ReturnType<typeof updateNewMessageBodyActionCreator> |
+                        ReturnType<typeof sendMessageActionCreator>
 
-export const addPost = () => {
-    let newPost = {
-        message: state.profilePage.newPostText ,
-        likesCount: "1"
+
+let store: StoreType = {
+    _state: {
+        profilePage: {
+            posts: [
+                {message: 'Hi! How are you?', likesCount: '3 '},
+                {message: "It's my first post.", likesCount: '0 '}],
+            newPostText: "Hey Hey Hey!"    
+        },
+        dialogsPage: {
+            messages: [
+                {message: "What are you doing now? I have good news!"},
+                {message: "How are you?"},
+                {message: "Hi!"}],
+            dialogs: [
+                {name: "Igor", id: "1"},
+                {name: "Ann", id: "2"},
+                {name: "Grigory", id: "3"}],
+            newMessageBody: ""    
+        },
+        sidebar: {}
+    },
+    getState ()  {
+        return this._state
+    },
+    _callSubscriber () {
+        console.log("State changed");
+    },
+    subscribe (observer) {
+        this._callSubscriber = observer
+    },
+    dispatch (action: ActionType) {
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._callSubscriber();
     }
-
-    state.profilePage.posts.push(newPost);
-    state.profilePage.newPostText = ""
-    rerenderEntireTree();
-    
 }
 
-export const updateNewPostText = (newText: string) => {
-    state.profilePage.newPostText = newText
-    rerenderEntireTree();
-}    
-
-export const subscribe = (observer: () => void) => {
-    rerenderEntireTree = observer
-}
-    
-
-export default state;
+export default store;

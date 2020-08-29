@@ -9,13 +9,12 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 //import { DialogType, MessageType, PostDataType} from "./index";
-import { RootStateType} from "./redux/state";
+import { RootStateType, ActionType} from "./redux/state";
 
 type PropsType = {
     state: RootStateType
     newPostText: string
-    addPost: ( ) => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionType) => void
 }
 
 
@@ -27,12 +26,13 @@ const App = (props: PropsType) => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/profile' render={ ()=> <Profile postData={props.state.profilePage.posts } 
-                                                                    addPost={props.addPost} 
-                                                                    newPostText={props.state.profilePage.newPostText}
-                                                                    updateNewPostText={props.updateNewPostText} /> } />
+                                                                    dispatch={props.dispatch}
+                                                                    newPostText={props.state.profilePage.newPostText} /> } />
                     <Route path='/dialogs' render={ ()=> <Dialogs
                         dialogsData={props.state.dialogsPage.dialogs}
-                        messagesData={props.state.dialogsPage.messages} /> }  />
+                        messagesData={props.state.dialogsPage.messages}
+                        state={props.state}
+                        dispatch={props.dispatch} /> }  />
                     <Route path='/news' render={ ()=> <News /> }  />
                     <Route path='/music' render={ ()=> <Music /> }  />
                     <Route path='/settings' render={ ()=> <Settings /> }  />
