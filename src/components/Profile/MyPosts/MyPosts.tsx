@@ -5,10 +5,10 @@ import {PostDataType, ActionType} from "../../../redux/store";
 import {addPostActionCreator, updateNewPostTextActionCreator} from '../../../redux/profileReducer'
 
 type PropsType = {
-
-    postData: Array<PostDataType>
+    updateNewPostText: (text: string) => void
+    addPost: () => void
+    postData: PostDataType[]
     newPostText: string
-    dispatch: (action: ActionType) => void
     
 }
 const MyPosts = (props: PropsType) => {
@@ -17,12 +17,12 @@ const MyPosts = (props: PropsType) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>();
     
     let addPost = () => {
-        props.dispatch(addPostActionCreator())
+        props.addPost();
 }
 
     let onPostChange = () => {
         let text = newPostElement.current ? newPostElement.current.value : "---"
-        props.dispatch( updateNewPostTextActionCreator(text) );
+        props.updateNewPostText(text);
 }
 
     return (

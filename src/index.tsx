@@ -3,17 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import store1 from './redux/store';
+
 import store from './redux/redux-store';
 
  let rerenderEntireTree = () => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App state={store.getState()} 
-    newPostText= {store1._state.profilePage.newPostText}
-    dispatch={store.dispatch.bind(store)}    
-    />
+    <App store={store}    />
   </React.StrictMode>,
   document.getElementById('root')
 );
