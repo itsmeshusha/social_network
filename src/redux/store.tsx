@@ -27,14 +27,12 @@ export type DialogsPageType ={
     newMessageBody: string
 }
 
-export type SidebarType = {
 
-}
 
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-    sidebar: SidebarType
+    
 }
 
 export type StoreType = {
@@ -69,8 +67,8 @@ let store: StoreType = {
                 {name: "Ann", id: "2"},
                 {name: "Grigory", id: "3"}],
             newMessageBody: ""    
-        },
-        sidebar: {}
+        }
+        
     },
     getState ()  {
         return this._state

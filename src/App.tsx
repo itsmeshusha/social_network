@@ -9,7 +9,7 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 //import { DialogType, MessageType, PostDataType} from "./index";
-import { RootStateType, ActionType} from "./redux/state";
+import { RootStateType, ActionType} from "./redux/store";
 
 type PropsType = {
     state: RootStateType
