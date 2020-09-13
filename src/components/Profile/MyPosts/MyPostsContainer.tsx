@@ -3,8 +3,9 @@ import MyPosts from './MyPosts';
 //import Post from "../Post/Post";
 //import {PostDataType, ActionType, ProfilePageType, DialogsPageType} from "../../../redux/store";
 import {addPostActionCreator, updateNewPostTextActionCreator} from '../../../redux/profileReducer'
-import StoreContext from '../../../StoreContext';
 //import { Store, CombinedState } from 'redux';
+import { connect } from 'react-redux'
+import { ActionType, RootStateType } from '../../../redux/store';
 
 // type PropsType = {
 //     store: Store<CombinedState<{
@@ -12,28 +13,26 @@ import StoreContext from '../../../StoreContext';
 //         dialogsPage: DialogsPageType
 //     }>, ActionType>
 // }
-const MyPostsContainer = () => {
-    return <StoreContext.Consumer> 
-        { (store) => {
-    const state = store.getState();
-    
-    let addPost = () => {
-        store.dispatch(addPostActionCreator())
-}
 
-    let onPostChange = (text: string) => {
-        store.dispatch( updateNewPostTextActionCreator(text) );
-}
 
-    return (
-            <MyPosts updateNewPostText={onPostChange}
-            addPost={addPost}
-            postData={state.profilePage.posts}
-            newPostText={state.profilePage.newPostText} />
-            );
+let mapStateToProps = (state: RootStateType) => {
+    return {
+        postData: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
     }
 }
-    </StoreContext.Consumer>
+
+let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
+    return {
+        updateNewPostText: (text: string) => {
+            dispatch( updateNewPostTextActionCreator(text) );
+        },
+        addPost: () => {
+            dispatch(addPostActionCreator());
+        }
+    }
 }
+
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
 
 export default MyPostsContainer;
