@@ -15,6 +15,8 @@ type PropsType = {
 
 
 const Users = (props: PropsType) => {
+
+    let getUsers = () => {
     if (props.usersPage.users.length === 0) {
         Axios.get("https://social-network.samuraijs.com/api/1.0/users")
         .then(response => {
@@ -22,8 +24,10 @@ const Users = (props: PropsType) => {
         });
     }
 
+    }
 
     return <div>
+        <button onClick={getUsers}>Get Users</button>
         {
             props.usersPage.users.map(u => <div key={u.id} >
                 <div >
