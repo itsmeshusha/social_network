@@ -1,9 +1,8 @@
-import Axios from 'axios';
 import React from 'react';
-import { initialStateType } from '../../redux/usersReducer';
 import s from './Users.module.css';
-import UserPhoto from '../../assets/images/UserPhoto.png'
-
+import UserPhoto from '../../assets/images/UserPhoto.png';
+import axios from 'axios';
+import { initialStateType } from '../../redux/usersReducer';
 
 type PropsType = {
     usersPage: initialStateType
@@ -12,32 +11,30 @@ type PropsType = {
     setUsers: (users: any) => void
 }
 
+class UsersC extends React.Component<PropsType> {
+    getUsers = () => {
+        if (this.props.usersPage.users.length === 0) {
+            axios.get("https://social-network.samuraijs.com/api/1.0/users")
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            });
+        }
+    
+        }
 
-
-const Users = (props: PropsType) => {
-
-    let getUsers = () => {
-    if (props.usersPage.users.length === 0) {
-        Axios.get("https://social-network.samuraijs.com/api/1.0/users")
-        .then(response => {
-            props.setUsers(response.data.items)
-        });
-    }
-
-    }
-
-    return <div>
-        <button onClick={getUsers}>Get Users</button>
+    render () {
+        return <div>
+        <button onClick={this.getUsers}>Get Users</button>
         {
-            props.usersPage.users.map(u => <div key={u.id} >
+            this.props.usersPage.users.map(u => <div key={u.id} >
                 <div >
                     <div>
                         <img className={s.img} src={u.photos.small !==null ? u.photos.small: UserPhoto } alt={"avatar"} />
                     </div>
                     <div>
                         {u.isFollow
-                            ? <button onClick={() => { props.unFollow(u.id) }}>Unfollow</button>
-                            : <button  onClick={() => { props.follow(u.id) }}>Follow</button>}
+                            ? <button onClick={() => { this.props.unFollow(u.id) }}>Unfollow</button>
+                            : <button  onClick={() => { this.props.follow(u.id) }}>Follow</button>}
                     </div>
                 </div>
                 <div >
@@ -54,6 +51,7 @@ const Users = (props: PropsType) => {
             </div>)
         }
     </div >
+    }
 }
 
-export default Users;
+export default UsersC;
