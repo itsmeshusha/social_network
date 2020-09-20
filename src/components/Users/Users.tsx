@@ -11,20 +11,18 @@ type PropsType = {
     setUsers: (users: any) => void
 }
 
-class UsersC extends React.Component<PropsType> {
-    getUsers = () => {
-        if (this.props.usersPage.users.length === 0) {
+class Users extends React.Component<PropsType> {
+    
+        componentDidMount() {
             axios.get("https://social-network.samuraijs.com/api/1.0/users")
             .then(response => {
                 this.props.setUsers(response.data.items)
             });
         }
-    
-        }
 
     render () {
         return <div>
-        <button onClick={this.getUsers}>Get Users</button>
+        
         {
             this.props.usersPage.users.map(u => <div key={u.id} >
                 <div >
@@ -54,4 +52,4 @@ class UsersC extends React.Component<PropsType> {
     }
 }
 
-export default UsersC;
+export default Users;
