@@ -13,45 +13,19 @@ export type initialStateType = {
         };
         isFollow: boolean;
     }[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 
 const initialState: initialStateType = {
-    users: [] 
+    users: [], 
+    pageSize: 5,
+    totalUsersCount: 24,
+    currentPage: 1,
+    
 }
-        // {
-        //     id: 1,
-        //     photos: 'https://pyxis.nymag.com/v1/imgs/079/792/3ed0d94be0a9bd3d023f00532889bab152-30-chandler-bing.rsquare.w330.jpg',
-        //     name: 'Chandler Bing',
-        //     status: 'Im joking!',
-        //     location: {
-        //         city: 'New York',
-        //         country: 'USA'
-        //     },
-        //     isFollow: true
-        // },
-        // {
-        //     id: 2,
-        //     avatar: 'https://i.insider.com/5c5020d752414739d54c32a6?width=600&format=jpeg&auto=webp',
-        //     firstName: 'Joey Tribbiani',
-        //     status: 'What?!',
-        //     location: {
-        //         city: 'New York',
-        //         country: 'USA'
-        //     },
-        //     isFollow: false
-        // },
-        // {
-        //     id: 3,
-        //     avatar: 'https://pbs.twimg.com/profile_images/1158494646982590465/JAK97IZC_400x400.jpg',
-        //     firstName: 'Monica Geller',
-        //     status: 'Hey you!',
-        //     location: {
-        //         city: 'New York',
-        //         country: 'USA'
-        //     },
-        //     isFollow: true
-        // },
-
+        
 export const userReducer = (state: initialStateType = initialState, action: ActionUsersTypes) => {
        
     switch (action.type) {
@@ -78,15 +52,22 @@ export const userReducer = (state: initialStateType = initialState, action: Acti
             }
         }
         case 'SET-USERS': {
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
         }
+        case 'SET-CURRENT-PAGE': {
+            return {...state, currentPage: action.currentPage}
+        }
+        // case 'SET-TOTAL-USER-COUNT': {
+        //     return {...state, totalCount: action.totalCount}
+        // }
         default:
             return state;
     }
 }
 
 export type ActionUsersTypes = ReturnType<typeof followAC> |
-    ReturnType<typeof unFollowAC> | ReturnType<typeof setUsersAC>
+    ReturnType<typeof unFollowAC> | ReturnType<typeof setUsersAC> | ReturnType<typeof setCurrentPageAC> 
+    //| ReturnType<typeof setTotalUserCountAC>
 
 
 export const followAC = (usersId: number) => {
@@ -107,3 +88,15 @@ export const setUsersAC = (users: any) => {
         users
     } as const
 }
+export const setCurrentPageAC = (currentPage: number) => {
+    return {
+        type: 'SET-CURRENT-PAGE',
+        currentPage
+    } as const
+}
+// export const setTotalUserCountAC = (totalCount: number) => {
+//     return {
+//         type: 'SET-TOTAL-USER-COUNT',
+//         totalCount
+//     } as const
+// }
