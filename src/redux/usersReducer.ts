@@ -21,7 +21,7 @@ export type initialStateType = {
 const initialState: initialStateType = {
     users: [], 
     pageSize: 5,
-    totalUsersCount: 24,
+    totalUsersCount: 1,
     currentPage: 1,
     
 }
@@ -57,9 +57,9 @@ export const userReducer = (state: initialStateType = initialState, action: Acti
         case 'SET-CURRENT-PAGE': {
             return {...state, currentPage: action.currentPage}
         }
-        // case 'SET-TOTAL-USER-COUNT': {
-        //     return {...state, totalCount: action.totalCount}
-        // }
+        case 'SET-TOTAL-USER-COUNT': {
+            return {...state, totalUsersCount: action.totalCount}
+        }
         default:
             return state;
     }
@@ -67,7 +67,7 @@ export const userReducer = (state: initialStateType = initialState, action: Acti
 
 export type ActionUsersTypes = ReturnType<typeof followAC> |
     ReturnType<typeof unFollowAC> | ReturnType<typeof setUsersAC> | ReturnType<typeof setCurrentPageAC> 
-    //| ReturnType<typeof setTotalUserCountAC>
+   | ReturnType<typeof setTotalUserCountAC>
 
 
 export const followAC = (usersId: number) => {
@@ -94,9 +94,9 @@ export const setCurrentPageAC = (currentPage: number) => {
         currentPage
     } as const
 }
-// export const setTotalUserCountAC = (totalCount: number) => {
-//     return {
-//         type: 'SET-TOTAL-USER-COUNT',
-//         totalCount
-//     } as const
-// }
+export const setTotalUserCountAC = (totalCount: number) => {
+    return {
+        type: 'SET-TOTAL-USER-COUNT',
+        totalCount
+    } as const
+}
