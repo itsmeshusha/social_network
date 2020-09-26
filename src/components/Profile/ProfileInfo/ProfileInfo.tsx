@@ -1,8 +1,15 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
+import {PhotosType} from '../../../redux/profileReducer';
 
+type PropsType ={
+  profile: {
+    userId: number
+    photos: PhotosType
+}
+}
 
-const ProfileInfo = () => {
+const ProfileInfo = (props: PropsType) => {
     return (
         <div className={s.profileInfo}>
             <img
@@ -10,7 +17,7 @@ const ProfileInfo = () => {
                 alt={'purple'}/>
             <div> Main content</div>
             <div className={s.ava}>
-                <img src='https://archilab.online/images/1/123.jpg' alt={'ava'}/>
+                <img src={props.profile.photos.small} alt={'ava'}/>
             </div>
         </div>
     )

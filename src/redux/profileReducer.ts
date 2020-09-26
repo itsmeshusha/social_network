@@ -1,24 +1,41 @@
 import { ActionType, ProfilePageType } from './store';
 
-type InitialStateType = {
+export type PhotosType ={
+    small: string
+    large: string
+    
+}
+export type InitialStateType = {
     posts: {
             message: string
             likesCount: string
         }[]
     newPostText: string    
+    profile: {
+        userId: number
+        photos: PhotosType
+    }
 }
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const SET_USER_PROFILE = 'SET-USER-PROFILE';
 
 const initialState: InitialStateType = {
     posts: [
         {message: 'Hi! How are you?', likesCount: '3 '},
         {message: "It's my first post.", likesCount: '0 '}],
-    newPostText: "Hey Hey Hey!"    
+    newPostText: "Hey Hey Hey!",
+    profile: {
+        userId: 2,
+        photos: {
+          small: "https://social-network.samuraijs.com/activecontent/images/users/2/user-small.jpg?v=0",
+          large: "https://social-network.samuraijs.com/activecontent/images/users/2/user.jpg?v=0"
+        }
+    }  
 }
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionType) => {
+const profileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
@@ -35,6 +52,8 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
             let stateCopy = {...state}
         stateCopy.newPostText = action.newText;
         return stateCopy;
+    } case SET_USER_PROFILE: {
+        return {...state, profile: action.profile}
     }
         default: 
         return state;
@@ -53,6 +72,16 @@ export const updateNewPostTextActionCreator = (text: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: text
+    } as const
+}
+
+export const setUserProfile = (profile: {
+    userId: number
+    photos: PhotosType
+}) => {
+    return {
+        type: SET_USER_PROFILE,
+        profile
     } as const
 }
 

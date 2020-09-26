@@ -1,5 +1,5 @@
 import React from 'react';
-import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator} from './profileReducer';
+import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator, setUserProfile, PhotosType } from './profileReducer';
 import dialogsReducer, {updateNewMessageBodyActionCreator, sendMessageActionCreator} from './dialogsReducer';
 
 export type PostDataType = {
@@ -19,6 +19,10 @@ export type MessageType = {
 export type ProfilePageType = {
     posts: Array<PostDataType>
     newPostText: string
+    profile: {
+        userId: number
+        photos: PhotosType
+    }
 }
 
 export type DialogsPageType ={
@@ -46,7 +50,8 @@ export type StoreType = {
 export type ActionType = ReturnType<typeof addPostActionCreator>  | 
                         ReturnType<typeof updateNewPostTextActionCreator> |
                         ReturnType<typeof updateNewMessageBodyActionCreator> |
-                        ReturnType<typeof sendMessageActionCreator>
+                        ReturnType<typeof sendMessageActionCreator> |
+                        ReturnType<typeof setUserProfile>
 
 
 let store: StoreType = {
@@ -55,7 +60,14 @@ let store: StoreType = {
             posts: [
                 {message: 'Hi! How are you?', likesCount: '3 '},
                 {message: "It's my first post.", likesCount: '0 '}],
-            newPostText: "Hey Hey Hey!"    
+            newPostText: "Hey Hey Hey!",
+            profile: {
+                userId: 2,
+                photos: {
+                  small: "https://social-network.samuraijs.com/activecontent/images/users/2/user-small.jpg?v=0",
+                  large: "https://social-network.samuraijs.com/activecontent/images/users/2/user.jpg?v=0"
+                }
+            }    
         },
         dialogsPage: {
             messages: [

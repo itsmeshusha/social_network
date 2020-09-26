@@ -1,24 +1,20 @@
 import React from 'react';
-// import s from './Profile.module.css';
-// import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-//import { Store, CombinedState } from 'redux'
-//import {ProfilePageType, DialogsPageType, ActionType} from "../../redux/store";
 import MyPostsContainer from './MyPosts/MyPostsContainer';
+import {PhotosType} from '../../redux/profileReducer';
 
 
+type PropsType ={
+    profile: {
+        userId: number
+        photos: PhotosType
+    }
+}
 
-// type PropsType ={
-//     store: Store<CombinedState<{
-// 		profilePage: ProfilePageType;
-// 		dialogsPage: DialogsPageType;
-// 	}>, ActionType>
-// }
-
-const Profile = () => {
+const Profile = (props: PropsType) => {
     return (
         <div>
-            <ProfileInfo />
+            <ProfileInfo profile={props.profile} />
             <MyPostsContainer />
 
         </div>
