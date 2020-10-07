@@ -8,3 +8,11 @@
     background-color: darkmagenta;
     grid-area: h;
 }
+
+.loginBlock {
+    float: right;
+}
+
+.loginBlock a {
+    color: white;
+}
