@@ -3,6 +3,7 @@ import s from './Users.module.css';
 import UserPhoto from '../../assets/images/UserPhoto.png';
 import { initialStateType } from '../../redux/usersReducer';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 type PropsType = {
     totalUsersCount: number
@@ -12,39 +13,69 @@ type PropsType = {
     usersPage: initialStateType
     follow: (usersId: number) => void
     unFollow: (usersId: number) => void
-    
+
 }
 
 const Users = (props: PropsType) => {
 
-        let pagesCount: number = Math.ceil(props.totalUsersCount / props.pageSize);
+    let pagesCount: number = Math.ceil(props.totalUsersCount / props.pageSize);
 
-        let pages = [];
-        for (let i=1; i<=pagesCount; i++){
-            pages.push(i);
-        }
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
+    }
 
-        return <div>
-            <div>
-                {pages.map(p => {
-                   return <span className={ props.currentPage === p ? s.selectedPage : ""}
-                   onClick={() => {props.onPageChanged(p) }}>{p}</span>
-                })}
-                
-            </div>
-        
+    return <div>
+        <div>
+            {pages.map(p => {
+                return <span className={props.currentPage === p ? s.selectedPage : ""}
+                    onClick={() => { props.onPageChanged(p) }}>{p}</span>
+            })}
+
+        </div>
+
         {
             props.usersPage.users.map(u => <div key={u.id} >
                 <div >
                     <div>
-                        <NavLink to={'/profile/'+u.id}>
-                        <img className={s.img} src={u.photos.small !==null ? u.photos.small: UserPhoto } alt={"avatar"} />
+                        <NavLink to={'/profile/' + u.id}>
+                            <img className={s.img} src={u.photos.small !== null ? u.photos.small : UserPhoto} alt={"avatar"} />
                         </NavLink>
                     </div>
                     <div>
                         {u.isFollow
-                            ? <button onClick={() => { props.unFollow(u.id) }}>Unfollow</button>
-                            : <button  onClick={() => { props.follow(u.id) }}>Follow</button>}
+                            ? <button onClick={() => {
+                                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                    withCredentials: true,
+                                    headers: {
+                                        "API-KEY": "a77ea86a-925e-4bb9-81e9-a41d0c7337ce"
+                                    }
+                                })
+                                    .then(response => {
+                                        if (response.data.resultCode === 0) {
+                                            props.unFollow(u.id)
+                                        }
+                                    });
+
+                            }}>Unfollow</button>
+
+
+                            : <button onClick={() => {
+
+                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                                    withCredentials: true,
+                                    headers: {
+                                        "API-KEY": "a77ea86a-925e-4bb9-81e9-a41d0c7337ce"
+                                    }
+                                })
+                                    .then(response => {
+                                        if (response.data.resultCode === 0) {
+                                            props.follow(u.id)
+                                        }
+                                    });
+
+                            }}>Follow</button>}
+
                     </div>
                 </div>
                 <div >
@@ -61,7 +92,7 @@ const Users = (props: PropsType) => {
             </div>)
         }
     </div >
-    }
+}
 
 
 export default Users;
