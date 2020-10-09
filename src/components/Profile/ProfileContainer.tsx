@@ -17,10 +17,12 @@ type ProfileType = {
     userId: number
     photos: PhotosType
     
+    
 }
 
 type MapStatePropsType = {
     profilePage: ProfileType
+    isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -48,14 +50,15 @@ class ProfileContainer extends React.Component<PropsType> {
     render() {
         return (
         <div>
-            <Profile profile={this.props.profilePage} />
+            <Profile profile={this.props.profilePage} isAuth={this.props.isAuth} />
 
         </div>
     )}
 }
 
 let mapStateToProps = (state: StateType): MapStatePropsType => ({
-    profilePage: state.profilePage.profile
+    profilePage: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 });
 
 let WithUrlDataContainerComponent = withRouter(ProfileContainer)

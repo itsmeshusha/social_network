@@ -5,23 +5,20 @@ import Dialogs from './Dialogs'
 //import Message from "./Message/Message";
 //import { ProfilePageType, DialogsPageType, ActionType } from "../../redux/store";
 import { updateNewMessageBodyActionCreator, sendMessageActionCreator } from '../../redux/dialogsReducer'
-
 import { connect } from 'react-redux';
 import { ActionType, RootStateType } from '../../redux/store';
-
-// type PropsType = {
-//     store: Store<CombinedState<{
-//         profilePage: ProfilePageType
-//         dialogsPage: DialogsPageType
-//     }>, ActionType>
-// }
+import { StateType } from '../../redux/redux-store';
 
 
-let mapStateToProps = (state: RootStateType) => {
+
+
+let mapStateToProps = (state: StateType) => {
     return {
         dialogsData: state.dialogsPage.dialogs,
         messagesData: state.dialogsPage.messages,
-        newMessageBody: state.dialogsPage.newMessageBody      
+        newMessageBody: state.dialogsPage.newMessageBody,
+        isAuth: state.auth.isAuth
+            
     }
 }
 

@@ -1,20 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StateType } from '../../redux/redux-store';
-import {  follow, setCurrentPage, setUsers, unFollow, setTotalUserCount, toggleIsFetching, toggleIsFollowingProgress, getUsersThunkCreator } from '../../redux/usersReducer';
+import {  follow, setUsers, unFollow,  toggleIsFetching, toggleIsFollowingProgress, getUsersThunkCreator } from '../../redux/usersReducer';
 import Users from './Users';
-import axios from 'axios';
 import { initialStateType } from '../../redux/usersReducer';
 import Preloader from '../Preloader/Preloader';
-import { usersAPI } from '../../api/api'
+
 
 type PropsType = {
     usersPage: initialStateType
     follow: (usersId: number) => void
     unFollow: (usersId: number) => void
     setUsers: (users: any) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalUserCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
     currentPage: number,
     pageSize: number,
@@ -67,5 +64,5 @@ const mapStateToProps = (state: StateType) => {
 
 export default connect(mapStateToProps, 
     {follow, unFollow, setUsers, 
-        setCurrentPage, setTotalUserCount, toggleIsFetching,
+         toggleIsFetching,
          toggleIsFollowingProgress, getUsersThunkCreator} )(UsersContainer);
