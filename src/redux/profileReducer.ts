@@ -1,4 +1,5 @@
 import { ActionType, ProfilePageType } from './store';
+import { usersAPI } from '../api/api'
 
 export type PhotosType ={
     small: string
@@ -83,6 +84,15 @@ export const setUserProfile = (profile: {
         type: SET_USER_PROFILE,
         profile
     } as const
+}
+
+export const getUserProfileThunkCreator = (userId: number) => {
+    return (dispatch: any) => {
+        usersAPI.getProfile(userId)
+        .then(response => {
+            dispatch(setUserProfile(response.data));
+        });
+    }
 }
 
 export default profileReducer;
