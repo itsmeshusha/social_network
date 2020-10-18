@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import {setUserProfile, getUserProfileThunkCreator} from '../../redux/profileReducer';
 import { StateType } from '../../redux/redux-store';
 import {PhotosType} from '../../redux/profileReducer';
-import { RouteComponentProps, withRouter, Redirect } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
-
+import {compose} from 'redux';
 
 
 type PathParamsType = {
@@ -58,15 +58,15 @@ class ProfileContainer extends React.Component<PropsType> {
     )}
 }
 
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
-
 
 let mapStateToProps = (state: StateType): MapStatePropsType => ({
     profilePage: state.profilePage.profile,
     isAuth: state.auth.isAuth
 });
 
-//@ts-ignore
-let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
 
-export default connect<MapStatePropsType, MapDispatchToPropsType, {},StateType>(mapStateToProps, {setUserProfile, getUserProfileThunkCreator}) (WithUrlDataContainerComponent);
+ export default compose <any> (
+    withAuthRedirect,
+    withRouter,
+    connect<MapStatePropsType, MapDispatchToPropsType, {},StateType>(mapStateToProps, {setUserProfile, getUserProfileThunkCreator}) 
+ )(ProfileContainer)
