@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import {setUserProfile, getUserProfileThunkCreator} from '../../redux/profileReducer';
 import { StateType } from '../../redux/redux-store';
 import {PhotosType} from '../../redux/profileReducer';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-
+import { RouteComponentProps, withRouter, Redirect } from 'react-router-dom';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 
 
 
 type PathParamsType = {
     userId: string
+    
 }
 
 type ProfileType = {
@@ -48,6 +49,7 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     render() {
+        
         return (
         <div>
             <Profile profile={this.props.profilePage} isAuth={this.props.isAuth} />
@@ -56,11 +58,15 @@ class ProfileContainer extends React.Component<PropsType> {
     )}
 }
 
+let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
+
+
 let mapStateToProps = (state: StateType): MapStatePropsType => ({
     profilePage: state.profilePage.profile,
     isAuth: state.auth.isAuth
 });
 
-let WithUrlDataContainerComponent = withRouter(ProfileContainer)
+//@ts-ignore
+let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
 
 export default connect<MapStatePropsType, MapDispatchToPropsType, {},StateType>(mapStateToProps, {setUserProfile, getUserProfileThunkCreator}) (WithUrlDataContainerComponent);

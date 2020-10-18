@@ -2,7 +2,7 @@ import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import {PhotosType} from '../../redux/profileReducer';
-import { Redirect } from 'react-router-dom';
+
 
 
 type PropsType ={
@@ -15,10 +15,7 @@ type PropsType ={
 }
 
 const Profile = (props: PropsType) => {
-    if(!props.isAuth ) {
-        return <Redirect to={'/login'} />
-    }
-
+    
     return (
         <div>
             <ProfileInfo profile={props.profile} />

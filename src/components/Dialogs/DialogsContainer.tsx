@@ -8,7 +8,19 @@ import { updateNewMessageBodyActionCreator, sendMessageActionCreator } from '../
 import { connect } from 'react-redux';
 import { ActionType, RootStateType } from '../../redux/store';
 import { StateType } from '../../redux/redux-store';
+import { Redirect } from 'react-router-dom';
+import { DialogType,  MessageType } from "../../redux/store";
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
+
+type PropsType = {
+    isAuth: boolean
+    onSendMessageClick: () => void 
+    onNewMessageChange: (body: string) => void
+    dialogsData: DialogType[]
+    messagesData: MessageType[]
+    newMessageBody: string
+}
 
 
 
@@ -23,6 +35,7 @@ let mapStateToProps = (state: StateType) => {
 }
 
 let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
+    
     return {
         onSendMessageClick: () => {
             dispatch(sendMessageActionCreator())
@@ -34,6 +47,8 @@ let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     }
 }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+let AuthRedirectComponent = withAuthRedirect(Dialogs)
+
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
 
 export default DialogsContainer;
