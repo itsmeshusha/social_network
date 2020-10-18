@@ -1,7 +1,7 @@
 import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
-import {setUserProfile, getUserProfileThunkCreator} from '../../redux/profileReducer';
+import {setUserProfile, getUserProfileThunkCreator, getUserStatusThunkCreator, updateUserStatusThunkCreator} from '../../redux/profileReducer';
 import { StateType } from '../../redux/redux-store';
 import {PhotosType} from '../../redux/profileReducer';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -18,17 +18,19 @@ type ProfileType = {
     userId: number
     photos: PhotosType
     
-    
 }
 
 type MapStatePropsType = {
     profilePage: ProfileType
     isAuth: boolean
+    status: string
 }
 
 type MapDispatchToPropsType = {
     setUserProfile: (profile: ProfileType) => void
     getUserProfileThunkCreator: (userId: number) => void
+    getUserStatusThunkCreator: (userId: number) => void
+    updateUserStatusThunkCreator: (status: string) => void
 }
 
 type OwnPropsType = MapStatePropsType & MapDispatchToPropsType
@@ -44,7 +46,8 @@ class ProfileContainer extends React.Component<PropsType> {
             userId = 2;
         }
 
-        this.props.getUserProfileThunkCreator(userId)
+        this.props.getUserProfileThunkCreator(userId);
+        this.props.getUserStatusThunkCreator(userId);
 
     }
 
@@ -52,7 +55,10 @@ class ProfileContainer extends React.Component<PropsType> {
         
         return (
         <div>
-            <Profile profile={this.props.profilePage} isAuth={this.props.isAuth} />
+            <Profile profile={this.props.profilePage} 
+                        isAuth={this.props.isAuth} 
+                        status={this.props.status} 
+                        updateUserStatus={this.props.updateUserStatusThunkCreator} />
 
         </div>
     )}
@@ -61,12 +67,13 @@ class ProfileContainer extends React.Component<PropsType> {
 
 let mapStateToProps = (state: StateType): MapStatePropsType => ({
     profilePage: state.profilePage.profile,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    status: state.profilePage.status
 });
 
 
  export default compose <any> (
     withAuthRedirect,
     withRouter,
-    connect<MapStatePropsType, MapDispatchToPropsType, {},StateType>(mapStateToProps, {setUserProfile, getUserProfileThunkCreator}) 
+    connect<MapStatePropsType, MapDispatchToPropsType, {},StateType>(mapStateToProps, {setUserProfile, getUserProfileThunkCreator, getUserStatusThunkCreator, updateUserStatusThunkCreator}) 
  )(ProfileContainer)

@@ -1,5 +1,5 @@
 import React from 'react';
-import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator, setUserProfile, PhotosType } from './profileReducer';
+import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator, setUserProfile, PhotosType, setUserStatus } from './profileReducer';
 import dialogsReducer, {updateNewMessageBodyActionCreator, sendMessageActionCreator} from './dialogsReducer';
 
 export type PostDataType = {
@@ -23,6 +23,7 @@ export type ProfilePageType = {
         userId: number
         photos: PhotosType
     }
+    status: string
 }
 
 export type DialogsPageType ={
@@ -51,7 +52,8 @@ export type ActionType = ReturnType<typeof addPostActionCreator>  |
                         ReturnType<typeof updateNewPostTextActionCreator> |
                         ReturnType<typeof updateNewMessageBodyActionCreator> |
                         ReturnType<typeof sendMessageActionCreator> |
-                        ReturnType<typeof setUserProfile>
+                        ReturnType<typeof setUserProfile> |
+                        ReturnType<typeof setUserStatus>
 
 
 let store: StoreType = {
@@ -67,7 +69,8 @@ let store: StoreType = {
                   small: "https://social-network.samuraijs.com/activecontent/images/users/2/user-small.jpg?v=0",
                   large: "https://social-network.samuraijs.com/activecontent/images/users/2/user.jpg?v=0"
                 }
-            }    
+            },
+            status: ""   
         },
         dialogsPage: {
             messages: [

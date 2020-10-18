@@ -8,6 +8,8 @@ type PropsType = {
         userId: number
         photos: PhotosType
     }
+    status: string
+    updateUserStatus: (status: string) => void
 }
 
 const ProfileInfo = (props: PropsType) => {
@@ -20,7 +22,7 @@ const ProfileInfo = (props: PropsType) => {
             <div className={s.ava}>
                 <img src={props.profile.photos.small} alt={'ava'} />
 
-                <ProfileStatus status={"This website is so awesome!"} />
+                <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus} />
 
             </div>
         </div>
