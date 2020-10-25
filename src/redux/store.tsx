@@ -1,6 +1,6 @@
 import React from 'react';
-import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator, setUserProfile, PhotosType, setUserStatus } from './profileReducer';
-import dialogsReducer, {updateNewMessageBodyActionCreator, sendMessageActionCreator} from './dialogsReducer';
+import profileReducer, {addPostActionCreator, setUserProfile, PhotosType, setUserStatus } from './profileReducer';
+import dialogsReducer, {sendMessageActionCreator} from './dialogsReducer';
 
 export type PostDataType = {
     message: string
@@ -29,7 +29,7 @@ export type ProfilePageType = {
 export type DialogsPageType ={
     messages: Array<MessageType>
     dialogs: Array<DialogType>
-    newMessageBody: string
+
 }
 
 
@@ -48,9 +48,7 @@ export type StoreType = {
     dispatch: (action: ActionType) => void
 }
 
-export type ActionType = ReturnType<typeof addPostActionCreator>  | 
-                        ReturnType<typeof updateNewPostTextActionCreator> |
-                        ReturnType<typeof updateNewMessageBodyActionCreator> |
+export type ActionType = ReturnType<typeof addPostActionCreator>  |
                         ReturnType<typeof sendMessageActionCreator> |
                         ReturnType<typeof setUserProfile> |
                         ReturnType<typeof setUserStatus>
@@ -81,7 +79,7 @@ let store: StoreType = {
                 {name: "Igor", id: "1"},
                 {name: "Ann", id: "2"},
                 {name: "Grigory", id: "3"}],
-            newMessageBody: ""    
+
         }
         
     },

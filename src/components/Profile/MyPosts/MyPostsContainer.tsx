@@ -1,18 +1,9 @@
 import React from 'react';
 import MyPosts from './MyPosts';
-//import Post from "../Post/Post";
-//import {PostDataType, ActionType, ProfilePageType, DialogsPageType} from "../../../redux/store";
-import {addPostActionCreator, updateNewPostTextActionCreator} from '../../../redux/profileReducer'
-//import { Store, CombinedState } from 'redux';
+import {addPostActionCreator} from '../../../redux/profileReducer'
 import { connect } from 'react-redux'
 import { ActionType, RootStateType } from '../../../redux/store';
 
-// type PropsType = {
-//     store: Store<CombinedState<{
-//         profilePage: ProfilePageType
-//         dialogsPage: DialogsPageType
-//     }>, ActionType>
-// }
 
 
 let mapStateToProps = (state: RootStateType) => {
@@ -24,11 +15,9 @@ let mapStateToProps = (state: RootStateType) => {
 
 let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     return {
-        updateNewPostText: (text: string) => {
-            dispatch( updateNewPostTextActionCreator(text) );
-        },
-        addPost: () => {
-            dispatch(addPostActionCreator());
+
+        addPost: (newPostText: string) => {
+            dispatch(addPostActionCreator(newPostText));
         }
     }
 }

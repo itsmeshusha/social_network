@@ -4,7 +4,7 @@ import Dialogs from './Dialogs'
 //import DialogItem from "./DialogItem/DialogItem";
 //import Message from "./Message/Message";
 //import { ProfilePageType, DialogsPageType, ActionType } from "../../redux/store";
-import { updateNewMessageBodyActionCreator, sendMessageActionCreator } from '../../redux/dialogsReducer'
+import {  sendMessageActionCreator } from '../../redux/dialogsReducer'
 import { connect } from 'react-redux';
 import { ActionType } from '../../redux/store';
 import { StateType } from '../../redux/redux-store';
@@ -15,7 +15,7 @@ import {compose} from 'redux';
 
 type PropsType = {
     //isAuth: boolean
-    onSendMessageClick: () => void 
+    onSendMessageClick: (newMessageBody: string) => void
     onNewMessageChange: (body: string) => void
     dialogsData: DialogType[]
     messagesData: MessageType[]
@@ -28,7 +28,7 @@ let mapStateToProps = (state: StateType) => {
     return {
         dialogsData: state.dialogsPage.dialogs,
         messagesData: state.dialogsPage.messages,
-        newMessageBody: state.dialogsPage.newMessageBody,
+        //newMessageBody: state.dialogsPage.newMessageBody,
         //isAuth: state.auth.isAuth
             
     }
@@ -37,11 +37,8 @@ let mapStateToProps = (state: StateType) => {
 let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     
     return {
-        onSendMessageClick: () => {
-            dispatch(sendMessageActionCreator())
-        },
-        onNewMessageChange: (body: string) => {
-            dispatch(updateNewMessageBodyActionCreator(body))
+        onSendMessageClick: (newMessageBody: string) => {
+            dispatch(sendMessageActionCreator(newMessageBody))
         }
         
     }
