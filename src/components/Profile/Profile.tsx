@@ -1,16 +1,12 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from './MyPosts/MyPostsContainer';
-import {PhotosType} from '../../redux/profileReducer';
+import {PhotosType, ProfileType} from '../../redux/profileReducer';
 
 
 
 type PropsType ={
-    profile: {
-        userId: number
-        photos: PhotosType
-        
-    }
+    profile: ProfileType
     isAuth: boolean
     status: string
     updateUserStatus: (status: string) => void

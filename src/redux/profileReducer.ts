@@ -6,16 +6,18 @@ export type PhotosType ={
     large: string
     
 }
+export type ProfileType = {
+    userId: number
+    photos: PhotosType
+
+}
 export type InitialStateType = {
     posts: {
             message: string
             likesCount: string
         }[]
     newPostText: string
-    profile: {
-        userId: number
-        photos: PhotosType
-    }
+    profile: ProfileType
     status: string
 }
 
@@ -72,10 +74,7 @@ export const addPostActionCreator = (newPostText: string) => {
 }
 
 
-export const setUserProfile = (profile: {
-    userId: number
-    photos: PhotosType
-}) => {
+export const setUserProfile = (profile: ProfileType) => {
     return {
         type: SET_USER_PROFILE,
         profile

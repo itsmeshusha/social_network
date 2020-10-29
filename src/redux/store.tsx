@@ -1,5 +1,11 @@
 import React from 'react';
-import profileReducer, {addPostActionCreator, setUserProfile, PhotosType, setUserStatus } from './profileReducer';
+import profileReducer, {
+    addPostActionCreator,
+    setUserProfile,
+    PhotosType,
+    setUserStatus,
+    ProfileType
+} from './profileReducer';
 import dialogsReducer, {sendMessageActionCreator} from './dialogsReducer';
 
 export type PostDataType = {
@@ -19,10 +25,7 @@ export type MessageType = {
 export type ProfilePageType = {
     posts: Array<PostDataType>
     newPostText: string
-    profile: {
-        userId: number
-        photos: PhotosType
-    }
+    profile: ProfileType
     status: string
 }
 

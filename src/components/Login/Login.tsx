@@ -4,6 +4,7 @@ import {Input} from "../FormsControls/FormsControls";
 import {required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
 import {login} from "../../redux/authReducer";
+import s from "../FormsControls/FormsControls.module.css"
 
 
 type FormDataType = {
@@ -28,7 +29,8 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                 <Field placeholder={"Password"}
                        name={"password"}
                        component={Input}
-                       validate={[required]} />
+                       validate={[required]}
+                        type={"password"}/>
             </div>
             <div>
                 <Field type="checkbox"
@@ -36,6 +38,9 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                        component={Input}
                        validate={[required]} /> Remember me
             </div>
+            { props.error && ( <div className={s.formSummaryError}>
+                {props.error}
+            </div>)}
             <button>Login</button>
         </form>
     )
